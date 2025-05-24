@@ -4,10 +4,7 @@
 def call(String projectKey) {
     script {
         echo "Performing SonarQube scan..."
-        def scannerHome = tool 'SonarQubeScanner' // Name of SonarQube Scanner tool configured in Jenkins
-        withSonarQubeEnv('SonarQubeServer') { // Name of SonarQube server configured in Jenkins
-            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${projectKey} -Dsonar.sources=./src"
-        }
+        sh "/opt/sonar-scanner/bin/sonar-scanner"
         // You might want to add a quality gate check here
         // timeout(time: 5, unit: 'MINUTES') {
         //     def qg = waitForQualityGate()
