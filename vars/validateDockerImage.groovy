@@ -5,12 +5,7 @@ def call(String dockerImageTag, String dockerfilePath = 'Dockerfile') {
         // Hadolint for Dockerfile linting
         sh "docker pull hadolint/hadolint"
         sh "docker run --rm -i hadolint/hadolint < ${dockerfilePath} || true"
-        sh " npm install --global dockerlinter"
-        sh "dockerlinter -f Dockerfile"
-        sh "docker image inspect frontend-dev:${env.version}"
-        sh "docker pull hadolint/hadolint"
-        sh "docker run --rm -i hadolint/hadolint < dockerfile"
-
+        sh "dockle ${dockerImageTag}"
 
         // Optional: Dive for image analysis
         // sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
