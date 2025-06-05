@@ -29,7 +29,6 @@ def call(String language) {
                 sh '''
                     echo "Running Stryker Mutator for Node.js..."
                     npx stryker run
-
                 '''
                 break
 
