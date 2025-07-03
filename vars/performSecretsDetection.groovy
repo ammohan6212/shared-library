@@ -4,8 +4,9 @@ def call(String scanPath = '.') {
         echo "Performing secrets detection on ${scanPath}..."
         // Tools like Gitleaks, Trufflehog, detect-secrets
         sh """
+            cd ~
             # Gitleaks (requires Gitleaks executable)
-            ./gitleaks detect --source=${scanPath} --verbose --redact || true
+            /home/amohan7714/gitleaks/gitleaks detect --source=${scanPath} --verbose --redact || true
 
             # Trufflehog (requires trufflehog executable)
             trufflehog filesystem ${scanPath} --no-update || true
