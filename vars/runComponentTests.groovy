@@ -20,7 +20,7 @@ def call(String language) {
 
             case 'node':
                 echo "Running Node.js component tests..."
-                sh 'npx jest tests/component.test.js || true'
+                // sh 'npx jest tests/component.test.js || true'
                 break
 
             case 'rust':

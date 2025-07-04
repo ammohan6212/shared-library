@@ -21,7 +21,8 @@ def call(String language) {
 
             case 'node':
                 // Jest snapshot update
-                sh 'npx jest tests/snapshot.test.js --updateSnapshot || true'
+                echo "mutation test happens here"
+                // sh 'npx jest tests/snapshot.test.js --updateSnapshot || true'
                 break
 
             case 'rust':

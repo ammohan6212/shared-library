@@ -1,18 +1,36 @@
-// vars/pushArtifact.groovy
-// This is a placeholder. Actual implementation depends on your artifact repository (e.g., Nexus, Artifactory, S3)
-def call(String filePath, String repositoryUrl, String credentialsId = null) {
+def call(String filePath, String gcsBucketPath, String credentialsId = null) {
     script {
-        echo "Pushing artifact ${filePath} to ${repositoryUrl}..."
-        // Example for Nexus/Artifactory using curl (replace with proper client/plugin if available)
-        // if (credentialsId) {
-        //     withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-        //         sh "curl -u ${USER}:${PASS} --upload-file ${filePath} ${repositoryUrl}/${filePath}"
-        //     }
-        // } else {
-        //     sh "curl --upload-file ${filePath} ${repositoryUrl}/${filePath}"
-        // }
-        echo "Placeholder: Artifact push logic here (e.g., using Nexus/Artifactory/S3 client)."
-        sh "echo 'Simulating artifact push: cp ${filePath} /tmp/artifacts/${filePath}'"
-        echo "✅ Artifact push simulated."
+        echo "Preparing to push artifact: ${filePath} to ${gcsBucketPath}..."
+
+        // Get current date in a nice format
+        def now = new Date()
+        def formattedDate = now.format("yyyyMMdd-HHmmss")
+
+        // Extract original filename (without path)
+        def file = new File(filePath)
+        def originalFileName = file.getName()
+
+        // Create new filename with date
+        def updatedFileName = "${originalFileName}-${formattedDate}"
+        def updatedFilePath = updatedFileName
+
+        // Copy original file to a new file with date in name
+        sh "cp ${filePath} ${updatedFilePath}"
+
+        echo "Uploading file as: ${updatedFileName}"
+
+        if (credentialsId) {
+            withCredentials([file(credentialsId: credentialsId, variable: 'GCP_KEY_FILE')]) {
+                sh '''
+                    echo "Activating GCP service account..."
+                    gcloud auth activate-service-account --key-file=$GCP_KEY_FILE
+                '''
+                sh "gsutil cp ${updatedFilePath} ${gcsBucketPath}/${updatedFileName}"
+            }
+        } else {
+            sh "gsutil cp ${updatedFilePath} ${gcsBucketPath}/${updatedFileName}"
+        }
+
+        echo "✅ Artifact pushed to GCS successfully as ${updatedFileName}."
     }
 }

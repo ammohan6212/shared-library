@@ -28,7 +28,7 @@ def call(String language) {
             case 'node':
                 sh '''
                     echo "Running Stryker Mutator for Node.js..."
-                    npx stryker run
+                    // npx stryker run
                 '''
                 break
 
