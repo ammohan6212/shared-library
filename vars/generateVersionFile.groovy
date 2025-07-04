@@ -2,13 +2,18 @@ def call(String cloud = 'aws', String bucket, String credentialsId) {
     script {
         echo "📦 Generating version file..."
 
-        def version     = sh(script: "git describe --tags --abbrev=0 || git rev-parse --short HEAD", returnStdout: true).trim()
+        def version = sh(
+            script: """
+                git describe --tags \$(git rev-list --tags --max-count=1) || echo "v0.0.0"
+            """,
+            returnStdout: true
+        ).trim()
         def commit      = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
         def branch      = env.BRANCH_NAME ?: 'unknown'
         def buildNumber = env.BUILD_NUMBER
         def buildDate   = sh(script: "date -u +'%Y-%m-%dT%H:%M:%SZ'", returnStdout: true).trim()
 
-        def versionFileName = "version-${branch}-${version}.txt"
+        def versionFileName = "${env.service_name}-${branch}-${version}.txt"
         def versionContent = """
             VERSION=${version}
             BUILD_NUMBER=${buildNumber}
