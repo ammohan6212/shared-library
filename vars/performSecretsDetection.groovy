@@ -6,7 +6,7 @@ def call(String scanPath = '.') {
         sh """
             cd ~
             # Gitleaks (requires Gitleaks executable)
-            ~/gitleaks/gitleaks detect --source=${scanPath} --verbose --redact || true
+            gitleaks detect --source=${scanPath} --verbose --redact || true
 
             # Trufflehog (requires trufflehog executable)
             trufflehog filesystem ${scanPath} --no-update || true
