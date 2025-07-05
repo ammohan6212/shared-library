@@ -7,7 +7,7 @@ def call(String language) {
                 sh 'python setup.py sdist bdist_wheel || true' // Builds source and wheel distributions
                 break
             case 'node':
-                sh 'npm run build || true' // Assumes a 'build' script in package.json
+                sh 'CI=false npm run build || true' // Assumes a 'build' script in package.json
                 break
             case 'go':
                 sh 'CGO_ENABLED=0 go build -o app_binary ./cmd/app || true' // Builds static binary
