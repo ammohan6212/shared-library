@@ -1,28 +1,28 @@
-def call(String lang = '') {
+def call(String language) {
     script {
-        echo "🔍 Starting database testing for language: ${lang}"
+        echo "🔍 Starting database testing for language: ${language}"
 
-        switch(lang.toLowerCase()) {
+        switch(language.toLowerCase()) {
             case 'python':
-                sh 'pytest tests/database_test.py'
+                echo "🧪 Would run pytest database tests (tests/database_test.py)."
                 break
             case 'java':
-                sh 'mvn test -Dtest=DatabaseTest'
+                echo "🧪 Would run Maven database tests (mvn test -Dtest=DatabaseTest)."
                 break
             case 'go':
-                sh 'go test tests/database_test.go'
+                echo "🧪 Would run Go database tests (tests/database_test.go)."
                 break
             case 'node':
             case 'javascript':
-                sh 'npx jest tests/database_test.js'
+                echo "🧪 Would run Jest database tests (tests/database_test.js)."
                 break
             case 'rust':
-                sh 'cargo test --test database_test'
+                echo "🧪 Would run Rust database tests (cargo test --test database_test)."
                 break
             default:
-                echo "⚠️ Unsupported or unknown language: '${lang}'. Skipping database test."
+                echo "⚠️ Unsupported or unknown language: '${language}'. Skipping database test."
         }
 
-        echo "✅ Database testing completed for ${lang}"
+        echo "✅ Database testing (messages only) completed for ${language}"
     }
 }

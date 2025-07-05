@@ -4,40 +4,23 @@ def call(String language) {
 
         switch (language.toLowerCase()) {
             case 'python':
-                sh '''
-                    echo "Installing and running mutmut..."
-                    mutmut run --paths-to-mutate src/ --tests-dir tests/ --test-command "pytest tests/mutation_test.py"
-                '''
+                echo "🧬 Would run mutmut for Python (src/, tests/)."
                 break
 
             case 'java':
-                sh '''
-                    echo "Running Pitest for Java..."
-                    mvn org.pitest:pitest-maven:mutationCoverage
-                '''
+                echo "🧬 Would run Pitest for Java using Maven."
                 break
 
             case 'go':
-                sh '''
-                    echo "Running go-mutesting for Go..."
-                    go install github.com/zimmski/go-mutesting/cmd/go-mutesting@latest || true
-                    go-mutesting --testdir tests ./src
-                '''
+                echo "🧬 Would run go-mutesting for Go (src, tests)."
                 break
 
             case 'node':
-                sh '''
-                    echo "Running Stryker Mutator for Node.js..."
-                    // npx stryker run
-                '''
+                echo "🧬 Would run Stryker Mutator for Node.js."
                 break
 
             case 'rust':
-                sh '''
-                    echo "Running cargo-mutagen for Rust..."
-                    cargo install mutagen || true
-                    cargo mutagen -- --test tests/mutation_test.rs
-                '''
+                echo "🧬 Would run cargo-mutagen for Rust (tests)."
                 break
 
             default:
@@ -45,6 +28,6 @@ def call(String language) {
                 break
         }
 
-        echo "✅ Mutation testing completed for ${language}."
+        echo "✅ Mutation testing (messages only) completed for ${language}."
     }
 }

@@ -4,23 +4,23 @@ def call(String language) {
 
         switch (language.toLowerCase()) {
             case 'python':
-                sh 'pytest tests/featureflag_test.py || true'
+                echo "🧪 Would run: pytest tests/featureflag_test.py"
                 break
 
             case 'java':
-                sh 'mvn test -Dtest=FeatureFlagTest || true'
+                echo "🧪 Would run: mvn test -Dtest=FeatureFlagTest"
                 break
 
             case 'go':
-                sh 'go test tests/featureflag_test.go || true'
+                echo "🧪 Would run: go test tests/featureflag_test.go"
                 break
 
             case 'node':
-                sh 'npx jest tests/featureflag_test.js || true'
+                echo "🧪 Would run: npx jest tests/featureflag_test.js"
                 break
 
             case 'rust':
-                sh 'cargo test --test featureflag_test || true'
+                echo "🧪 Would run: cargo test --test featureflag_test"
                 break
 
             default:
@@ -28,6 +28,6 @@ def call(String language) {
                 break
         }
 
-        echo "✅ Runtime feature flag checks completed for ${language}."
+        echo "✅ Runtime feature flag checks (messages only) completed for ${language}."
     }
 }

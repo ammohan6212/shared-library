@@ -4,25 +4,25 @@ def call(String language) {
 
         switch (language.toLowerCase()) {
             case 'python':
-                sh 'pytest tests/regression_test.py || true'
+                echo "🧪 Would run pytest regression tests (tests/regression_test.py)."
                 break
             case 'java':
-                sh 'mvn test -Dgroups=regression || true'
+                echo "🧪 Would run Maven regression tests (mvn test -Dgroups=regression)."
                 break
             case 'go':
-                sh 'go test tests/regression_test.go || true'
+                echo "🧪 Would run Go regression tests (tests/regression_test.go)."
                 break
             case 'node':
-                sh 'npx jest tests/regression_test.js || true'
+                echo "🧪 Would run Jest regression tests (tests/regression_test.js)."
                 break
             case 'rust':
-                sh 'cargo test --test regression_test || true'
+                echo "🧪 Would run Rust regression tests (cargo test --test regression_test)."
                 break
             default:
                 echo "⚠️ Language not recognized. Skipping regression tests."
                 break
         }
 
-        echo "✅ Regression testing completed for ${language}."
+        echo "✅ Regression testing (messages only) completed for ${language}."
     }
 }

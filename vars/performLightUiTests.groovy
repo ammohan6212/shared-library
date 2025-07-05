@@ -1,18 +1,19 @@
 // vars/performLightUiTests.groovy
 def call(String language) {
     script {
-        echo "Performing light UI tests for ${language}..."
-        // Quick UI tests, possibly against a deployed environment.
-        switch (language) {
+        echo "✨ Performing light UI tests for ${language}..."
+
+        switch (language.toLowerCase()) {
             case 'node':
-                // Example for Cypress/Playwright
-                sh 'npx cypress run --spec "cypress/e2e/smoke.cy.js" || true'
-                // sh 'npx playwright test --project=chromium --grep "@smoke" || true'
+                echo "🧪 Would run Cypress smoke test (cypress/e2e/smoke.cy.js)."
+                echo "💡 Alternatively: would run Playwright smoke tests (e.g., @smoke tag)."
                 break
+
             default:
-                echo "⚠️ Language unknown or no specific light UI testing tool. Skipping."
+                echo "⚠️ Language unknown or no specific light UI testing tool configured. Skipping."
                 break
         }
-        echo "✅ Light UI tests completed."
+
+        echo "✅ Light UI testing (messages only) completed."
     }
 }

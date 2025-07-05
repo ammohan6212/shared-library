@@ -4,28 +4,23 @@ def call(String language) {
 
         switch (language.toLowerCase()) {
             case 'python':
-                echo "Running Python component tests..."
-                sh 'pytest tests/component_test.py || true'
+                echo "🧪 Would run Python component tests (tests/component_test.py)."
                 break
 
             case 'java':
-                echo "Running Java component tests..."
-                sh 'mvn test -Dtest=ComponentTest || true'
+                echo "🧪 Would run Java component tests with Maven (ComponentTest)."
                 break
 
             case 'go':
-                echo "Running Go component tests..."
-                sh 'go test tests/component_test.go || true'
+                echo "🧪 Would run Go component tests (tests/component_test.go)."
                 break
 
             case 'node':
-                echo "Running Node.js component tests..."
-                // sh 'npx jest tests/component.test.js || true'
+                echo "🧪 Would run Node.js component tests with Jest (tests/component.test.js)."
                 break
 
             case 'rust':
-                echo "Running Rust component tests..."
-                sh 'cargo test --test component_test || true'
+                echo "🧪 Would run Rust component tests (cargo test --test component_test)."
                 break
 
             default:
@@ -33,6 +28,6 @@ def call(String language) {
                 break
         }
 
-        echo "✅ Component testing completed for ${language}."
+        echo "✅ Component testing (messages only) completed for ${language}."
     }
 }

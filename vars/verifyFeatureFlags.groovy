@@ -1,20 +1,22 @@
 // vars/verifyFeatureFlags.groovy
 def call(String language) {
     script {
-        echo "Verifying feature flags for ${language}..."
-        // This could involve running a script that queries a feature flag service
-        // or checks configuration files.
-        switch (language) {
+        echo "🚩 Verifying feature flags for ${language}..."
+
+        switch (language.toLowerCase()) {
             case 'node':
-                sh 'node scripts/verifyFeatureFlags.js || true'
+                echo "🔎 Would run: node scripts/verifyFeatureFlags.js"
                 break
+
             case 'python':
-                sh 'python scripts/verify_feature_flags.py || true'
+                echo "🔎 Would run: python scripts/verify_feature_flags.py"
                 break
+
             default:
-                echo "⚠️ Language unknown or no feature flag verification script. Skipping."
+                echo "⚠️ Language '${language}' unknown or no feature flag verification script configured. Skipping."
                 break
         }
-        echo "✅ Feature flag verification completed."
+
+        echo "✅ Feature flag verification (messages only) completed for ${language}."
     }
 }

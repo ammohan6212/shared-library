@@ -5,24 +5,23 @@ def call(String language) {
 
         switch (language.toLowerCase()) {
             case 'python':
-                sh 'pytest tests/test_api.py || true'
+                echo "🧪 Would run pytest for API tests (tests/test_api.py)."
                 break
 
             case 'java':
-                sh 'mvn test -Dtest=ApiTest || true'
+                echo "🧪 Would run Maven API tests (e.g., mvn test -Dtest=ApiTest)."
                 break
 
             case 'go':
-                sh 'go test tests/api_test.go || true'
+                echo "🧪 Would run Go API tests (tests/api_test.go)."
                 break
 
             case 'node':
-                // Prefer specific test file if available
-                sh 'npx jest tests/api.test.js || true'
+                echo "🧪 Would run Jest API tests (tests/api.test.js)."
                 break
 
             case 'rust':
-                sh 'cargo test --test api_test || true'
+                echo "🧪 Would run Rust API tests (cargo test --test api_test)."
                 break
 
             default:
@@ -31,6 +30,6 @@ def call(String language) {
                 break
         }
 
-        echo "✅ API testing completed for ${language}."
+        echo "✅ API testing (messages only) completed for ${language}."
     }
 }

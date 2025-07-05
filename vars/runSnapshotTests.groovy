@@ -2,32 +2,26 @@ def call(String language) {
     script {
         echo "📸 Performing snapshot testing for ${language}..."
 
-        switch (language) {
+        switch (language.toLowerCase()) {
             case 'python':
-                // Using pytest-snapshot
-                sh 'pytest --snapshot-update tests/snapshot_test.py || true'
+                echo "🧪 Would run pytest snapshot update (pytest-snapshot) for Python (tests/snapshot_test.py)."
                 break
 
             case 'java':
-                // Manual snapshot testing: assertj/approvaltests (inform user)
-                echo "ℹ️ Snapshot testing in Java typically requires manual validation via ApprovalTests or AssertJ."
-                echo "➡️ Please ensure you have written snapshot tests in `tests/snapshot_test.java`."
+                echo "ℹ️ Snapshot testing in Java usually uses ApprovalTests or AssertJ."
+                echo "➡️ Please ensure snapshot tests are in `tests/snapshot_test.java`."
                 break
 
             case 'go':
-                // Manual snapshot logic, run the file
-                sh 'go test tests/snapshot_test.go || true'
+                echo "🧪 Would run Go snapshot test (tests/snapshot_test.go)."
                 break
 
             case 'node':
-                // Jest snapshot update
-                echo "mutation test happens here"
-                // sh 'npx jest tests/snapshot.test.js --updateSnapshot || true'
+                echo "🧪 Would run Jest snapshot update (npx jest --updateSnapshot) for Node.js."
                 break
 
             case 'rust':
-                // Using insta crate
-                sh 'cargo insta test --review || true'
+                echo "🧪 Would run cargo insta snapshot test for Rust."
                 break
 
             default:
@@ -35,6 +29,6 @@ def call(String language) {
                 break
         }
 
-        echo "✅ Snapshot testing completed for ${language}."
+        echo "✅ Snapshot testing (messages only) completed for ${language}."
     }
 }

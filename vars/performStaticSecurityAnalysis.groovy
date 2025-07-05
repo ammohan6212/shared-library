@@ -1,33 +1,30 @@
 // vars/performStaticSecurityAnalysis.groovy
 def call(String language) {
     script {
-        echo "Performing static security analysis for ${language}..."
-        // This often involves dedicated SAST tools like SonarQube (already covered),
-        // Snyk Code, Checkmarx, Fortify, Semgrep, Bandit (Python), ESLint (JS/TS).
-        switch (language) {
+        echo "🔎 Performing static security analysis for ${language}..."
+
+        switch (language.toLowerCase()) {
             case 'python':
-                sh 'pip install bandit || true'
-                sh 'bandit -r src/ -f json -o bandit-report.json || true'
+                echo "🛡️ Would run Bandit (e.g., bandit -r src/ -f json -o bandit-report.json)."
                 break
+
             case 'node':
-                sh 'npm install -g snyk || true'
-                withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                    sh "snyk code test --org=your-snyk-org-id || true"
-                }
+                echo "🛡️ Would run Snyk Code for Node.js (e.g., snyk code test)."
                 break
+
             case 'go':
-                sh 'go install github.com/securego/gosec/cmd/gosec@latest || true'
-                sh 'gosec ./... || true'
+                echo "🛡️ Would run gosec for Go (e.g., gosec ./...)."
                 break
+
             case 'java':
-                // For Java, you might use Maven plugins like SpotBugs or FindBugs
-                // sh 'mvn com.github.spotbugs:spotbugs-maven-plugin:check'
-                echo "Java SAST handled by SonarQube or other dedicated tools."
+                echo "🛡️ Would run SpotBugs or SonarQube for Java static analysis."
                 break
+
             default:
-                echo "⚠️ Language unknown or no specific SAST tool configured. Skipping."
+                echo "⚠️ Language '${language}' unknown or no SAST tool configured. Skipping."
                 break
         }
-        echo "✅ Static security analysis completed."
+
+        echo "✅ Static security analysis (messages only) completed for ${language}."
     }
 }

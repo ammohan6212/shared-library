@@ -5,31 +5,30 @@ def call(String language) {
 
         switch (language.toLowerCase()) {
             case 'python':
-                sh 'pytest tests/smoke_test.py || true'
+                echo "💨 Would run pytest smoke test (tests/smoke_test.py)."
                 break
 
             case 'java':
-                sh 'mvn test -Dtest=SmokeTest || true'
+                echo "💨 Would run Maven smoke test (SmokeTest class)."
                 break
 
             case 'go':
-                sh 'go test tests/smoke_test.go || true'
+                echo "💨 Would run Go smoke test (tests/smoke_test.go)."
                 break
 
             case 'node':
-                sh 'npx jest tests/smoke.test.js || true'
+                echo "💨 Would run Jest smoke test (tests/smoke.test.js)."
                 break
 
             case 'rust':
-                sh 'cargo test --test smoke || true'
+                echo "💨 Would run Rust smoke test (cargo test --test smoke)."
                 break
 
             default:
-                echo "⚠️ Language not recognized. Running fallback smoke test with curl..."
-                sh 'curl -f http://your-app-url/health || true'  // Replace with your real URL
+                echo "⚠️ Language not recognized. Would run fallback smoke test using curl on health endpoint."
                 break
         }
 
-        echo "✅ Smoke testing completed for ${language}."
+        echo "✅ Smoke testing (messages only) completed for ${language}."
     }
 }

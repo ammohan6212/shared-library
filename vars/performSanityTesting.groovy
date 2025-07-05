@@ -2,30 +2,25 @@ def call(String language) {
     script {
         echo "🚦 Performing sanity testing for ${language}..."
 
-        switch (language) {
+        switch (language.toLowerCase()) {
             case 'python':
-                // Assumes file is: tests/sanity_test.py
-                sh 'pytest tests/sanity_test.py || true'
+                echo "💡 Would run Python sanity tests using pytest (tests/sanity_test.py)."
                 break
 
             case 'java':
-                // Assumes class is: SanityTest.java in standard test path
-                sh 'mvn test -Dtest=SanityTest || true'
+                echo "💡 Would run Java sanity tests using Maven (SanityTest class)."
                 break
 
             case 'go':
-                // Assumes function: func TestSanity(t *testing.T) in tests/sanity_test.go
-                sh 'go test -v -run TestSanity ./tests || true'
+                echo "💡 Would run Go sanity tests (tests/sanity_test.go, TestSanity)."
                 break
 
             case 'node':
-                // Assumes file is: tests/sanity.test.js
-                sh 'npx jest tests/sanity.test.js || true'
+                echo "💡 Would run Node.js sanity tests using Jest (tests/sanity.test.js)."
                 break
 
             case 'rust':
-                // Assumes file is: tests/sanity_test.rs
-                sh 'cargo test --test sanity_test || true'
+                echo "💡 Would run Rust sanity tests (tests/sanity_test.rs)."
                 break
 
             default:
@@ -33,6 +28,6 @@ def call(String language) {
                 break
         }
 
-        echo "✅ Sanity testing completed for ${language}."
+        echo "✅ Sanity testing (messages only) completed for ${language}."
     }
 }

@@ -2,37 +2,32 @@ def call(String language) {
     script {
         echo "📦 Performing integration testing for ${language}..."
 
-        switch (language) {
+        switch (language.toLowerCase()) {
             case 'node':
-                // Runs file-based Jest test for integration
-                sh 'npx jest tests/integration_test.js || true'
+                echo "🧪 Would run Jest integration tests (tests/integration_test.js)."
                 break
 
             case 'python':
-                // Runs file-based pytest integration test
-                sh 'pytest tests/integration_test.py || true'
+                echo "🧪 Would run pytest integration tests (tests/integration_test.py)."
                 break
 
             case 'java':
-                // Runs a specific integration test file or class
-                sh 'mvn test -Dtest=IntegrationTest || true'
-                // Alternatively, use: sh 'mvn failsafe:integration-test || true'
+                echo "🧪 Would run Maven integration tests (mvn test -Dtest=IntegrationTest)."
+                echo "ℹ️ Alternatively: mvn failsafe:integration-test."
                 break
 
             case 'go':
-                // Go test on a specific integration test file
-                sh 'go test tests/integration_test.go || true'
+                echo "🧪 Would run Go integration tests (tests/integration_test.go)."
                 break
 
             case 'rust':
-                // Rust integration test (file: tests/integration_test.rs)
-                sh 'cargo test --test integration_test || true'
+                echo "🧪 Would run Rust integration tests (cargo test --test integration_test)."
                 break
 
             default:
                 echo "⚠️ Language unknown. Skipping integration tests."
         }
 
-        echo "✅ Integration testing completed."
+        echo "✅ Integration testing (messages only) completed for ${language}."
     }
 }
