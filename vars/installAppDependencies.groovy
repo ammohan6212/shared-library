@@ -8,6 +8,7 @@ def call(String language) {
                 break
             case 'node':
                 sh 'npm i -g || true'
+                sh 'npm i -g react-scripts || true'
                 break
             case 'go':
                 sh 'go mod tidy || true'
