@@ -11,6 +11,7 @@ def call(String language) {
                 break
             case 'node':
                 sh 'npm audit || true'
+                sh 'npm audit fix --force'
                 sh 'snyk auth 9d262b22-1f2c-4069-adb9-696793789926'
                 sh 'snyk test --file=package.json'
                 break
