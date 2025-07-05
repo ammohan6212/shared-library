@@ -10,7 +10,7 @@ def call(String language) {
                 sh 'CI=false npm run build || true' // Assumes a 'build' script in package.json
                 break
             case 'go':
-                sh 'CGO_ENABLED=0 go build -o app_binary ./cmd/app || true' // Builds static binary
+                sh 'CGO_ENABLED=0 go build -o app_binary ./src || true' // Builds static binary
                 break
             case 'java':
                 sh 'mvn clean package -DskipTests || true' // Creates JAR/WAR
