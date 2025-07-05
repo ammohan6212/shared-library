@@ -1,9 +1,8 @@
-// vars/pushDockerImageToRegistry.groovy
-def call(String registryUrl, String credentialsId, String dockerImageTag) {
+def call(String registryUrl, String credentialsId, def dockerImage) {
     script {
-        echo "Pushing Docker image ${dockerImageTag} to ${registryUrl}..."
+        echo "Pushing Docker image ${dockerImage.imageName()} to ${registryUrl}..."
         docker.withRegistry(registryUrl, credentialsId) {
-            dockerImageTag.push()
+            dockerImage.push()
         }
         echo "✅ Docker image pushed to registry."
     }
