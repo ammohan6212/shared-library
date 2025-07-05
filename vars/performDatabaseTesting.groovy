@@ -1,27 +1,35 @@
+// vars/performApiTesting.groovy
 def call(String language) {
     script {
-        echo "🔍 Starting database testing for language: ${language}"
+        echo "🚀 Performing API testing for ${language}..."
 
-        switch(language.toLowerCase()) {
+        switch (language.toLowerCase()) {
             case 'python':
-                echo "🧪 Would run pytest database tests (tests/database_test.py)."
+                echo "🧪 Would run pytest for API tests (tests/test_api.py)."
                 break
+
             case 'java':
-                echo "🧪 Would run Maven database tests (mvn test -Dtest=DatabaseTest)."
+                echo "🧪 Would run Maven API tests (e.g., mvn test -Dtest=ApiTest)."
                 break
+
             case 'go':
-                echo "🧪 Would run Go database tests (tests/database_test.go)."
+                echo "🧪 Would run Go API tests (tests/api_test.go)."
                 break
+
             case 'node':
-                echo "🧪 Would run Jest database tests (tests/database_test.js)."
+                echo "🧪 Would run Jest API tests (tests/api.test.js)."
                 break
+
             case 'rust':
-                echo "🧪 Would run Rust database tests (cargo test --test database_test)."
+                echo "🧪 Would run Rust API tests (cargo test --test api_test)."
                 break
+
             default:
-                echo "⚠️ Unsupported or unknown language: '${language}'. Skipping database test."
+                echo "⚠️ Language '${language}' not recognized for API testing."
+                echo "👉 You may run: newman run tests/my_api_collection.json or another fallback."
+                break
         }
 
-        echo "✅ Database testing (messages only) completed for ${language}"
+        echo "✅ API testing (messages only) completed for ${language}."
     }
 }
