@@ -4,7 +4,6 @@ def call(String dockerImageTag, String usernameCredentialId, String passwordCred
             string(credentialsId: usernameCredentialId, variable: 'DOCKER_USERNAME'),
             string(credentialsId: passwordCredentialId, variable: 'DOCKER_PASSWORD')
         ]) {
-            echo "🔑 Logging in to Docker registry ${registryUrl} before running Docker Scout..."
 
             // Perform docker login
             sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
@@ -16,8 +15,7 @@ def call(String dockerImageTag, String usernameCredentialId, String passwordCred
             sh "docker scout cves ${dockerImageTag}"
             sh "docker scout recommendations ${dockerImageTag}"
 
-            // Optional: logout after scan
-            sh "docker logout ${registryUrl}"
+            sh "docker logout"
 
             echo "🚀 Docker Scout scan completed for ${dockerImageTag}."
         }
