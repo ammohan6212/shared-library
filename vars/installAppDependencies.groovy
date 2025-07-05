@@ -7,8 +7,8 @@ def call(String language) {
                 sh 'pip install -r requirements.txt || true'
                 break
             case 'node':
-                sh 'npm install  || true'
-                sh 'npm install  react-scripts || true'
+                sh ' rm -rf node_modules package-lock.json'
+                sh 'npm install'
                 break
             case 'go':
                 sh 'go mod tidy || true'
