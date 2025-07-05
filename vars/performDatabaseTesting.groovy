@@ -13,7 +13,6 @@ def call(String language) {
                 echo "🧪 Would run Go database tests (tests/database_test.go)."
                 break
             case 'node':
-            case 'javascript':
                 echo "🧪 Would run Jest database tests (tests/database_test.js)."
                 break
             case 'rust':
