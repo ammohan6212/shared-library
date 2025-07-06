@@ -25,10 +25,9 @@ def call(List services, String namespace = "default") {
 
         echo "⚡ Starting port-forward and checking HTTP response"
 
-        // Start port-forward
+        // Start port-forward in background
         sh """
             kubectl port-forward svc/${svcName} ${svcPort}:${svcPort} -n ${namespace} &
-            echo \$! > portforward_${svcName}_pid
             sleep 5
         """
 
@@ -36,13 +35,13 @@ def call(List services, String namespace = "default") {
         def responseCode = sh(script: "curl -s -o /dev/null -w \"%{http_code}\" http://localhost:${svcPort}${path}", returnStdout: true).trim()
 
         if (responseCode != expectedCode) {
-            sh "kill \$(cat portforward_${svcName}_pid)"
+            sh "pkill -f 'kubectl port-forward svc/${svcName}' || true"
             error "❌ Service ${svcName} did not return HTTP ${expectedCode}! Got: ${responseCode}"
         } else {
             echo "✅ Service ${svcName} returned HTTP ${expectedCode} successfully!"
         }
 
-        // Kill port-forward
-        sh "kill \$(cat portforward_${svcName}_pid)"
+        // Stop port-forward
+        sh "pkill -f 'kubectl port-forward svc/${svcName}' || true"
     }
 }
