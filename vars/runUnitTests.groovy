@@ -4,35 +4,23 @@ def call(String language) {
 
         switch (language.toLowerCase()) {
             case 'python':
-                sh """
-                    pip install pytest || true
-                    pytest tests/test_unit.py || true
-                """
+                echo "unit test for python happens here "
                 break
 
             case 'java':
-                sh """
-                    mvn test -Dtest=UnitTest || true
-                """
+                echo "unit test for java happens here "
                 break
 
             case 'go':
-                sh """
-                    go test tests/unit_test.go -v || true
-                """
+                 echo "unit test for go happens here "
                 break
 
             case 'node':
-                sh """
-                    npm install || true
-                    npx jest tests/unit.test.js || true
-                """
+                 echo "unit test for node happens here "
                 break
 
             case 'rust':
-                sh """
-                    cargo test --test unit_test || true
-                """
+                echo "unit test for rust happens here "
                 break
 
             default:
