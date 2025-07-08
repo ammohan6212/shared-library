@@ -1,6 +1,5 @@
 // vars/sendEmailNotification.groovy
-// Requires the Email Extension Plugin configured in Jenkins
-def call(String status, String recipients) {
+def call(String status, String recipients, String customMessage = "") {
     script {
         def subject
         def body
@@ -11,6 +10,7 @@ def call(String status, String recipients) {
                 body = """
                     <p>Hello Team,</p>
                     <p>The Jenkins job <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> has completed successfully.</p>
+                    ${customMessage ? "<p>${customMessage}</p>" : ""}
                     <p>Link to build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                 """
                 break
@@ -20,6 +20,7 @@ def call(String status, String recipients) {
                     <p>Hello Team,</p>
                     <p>The Jenkins pipeline <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> finished in an unstable state.</p>
                     <p>There might be some non-critical issues (e.g., test failures).</p>
+                    ${customMessage ? "<p>${customMessage}</p>" : ""}
                     <p>Link to build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                 """
                 break
@@ -28,15 +29,18 @@ def call(String status, String recipients) {
                 body = """
                     <p>Hello Team,</p>
                     <p>The Jenkins pipeline <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> was aborted.</p>
+                    ${customMessage ? "<p>${customMessage}</p>" : ""}
                     <p>Link to build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                 """
                 break
             case 'Alert':
-                subject = "🛑 Important: need your presence  to continue the pipelie  ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}"
+                subject = "🛑 Important: need your presence to continue the pipeline ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}"
                 body = """
-                    <p>Hello ,</p>
-                    <p>The Jenkins pipeline <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> need your presence to continue to the next stage</p>
-                    <p> please login to the jenkins and approve to go to the next stage</P>
+                    <p>Hello,</p>
+                    <p>The Jenkins pipeline <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> needs your approval to proceed to the next stage.</p>
+                    ${customMessage ? "<p>${customMessage}</p>" : ""}
+                    <p>Please log in to Jenkins and approve to continue.</p>
+                    <p>Link to build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                 """
                 break
             case 'FAILURE':
@@ -45,12 +49,17 @@ def call(String status, String recipients) {
                     <p>Hello Team,</p>
                     <p>The Jenkins pipeline <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> has failed.</p>
                     <p>Please check the build logs for details.</p>
+                    ${customMessage ? "<p>${customMessage}</p>" : ""}
                     <p>Link to build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                 """
                 break
             default:
                 subject = "Jenkins Build Notification: ${env.JOB_NAME} #${env.BUILD_NUMBER} (${status})"
-                body = "Status: ${status}. Link: ${env.BUILD_URL}"
+                body = """
+                    <p>Status: ${status}</p>
+                    ${customMessage ? "<p>${customMessage}</p>" : ""}
+                    <p>Link: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                """
                 break
         }
 
