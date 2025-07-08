@@ -8,7 +8,7 @@ def call(String language) {
                 break
             case 'node':
                 sh ' rm -rf node_modules package-lock.json'
-                sh ''
+                sh 'npm install react-scripts --save'
                 sh 'npm install'
                 break
             case 'go':
