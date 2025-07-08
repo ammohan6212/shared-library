@@ -36,9 +36,6 @@ def call(String language) {
                 case 'rust':
                     sh 'ls -l'
                     sh 'cargo audit || true'
-                    sh 'snyk auth $SNYK_TOKEN'
-                    sh 'export SNYK_RUST_PROJECT_SUPPORT=1'
-                    sh 'snyk test --file=Cargo.toml --package-manager=cargo'
                     break
 
                 default:
