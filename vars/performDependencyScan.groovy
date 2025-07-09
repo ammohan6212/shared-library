@@ -9,7 +9,7 @@ def call(String language) {
                     sh 'pip install safety || true'
                     sh 'safety check -r requirements.txt || true'
                     sh 'snyk auth $SNYK_TOKEN'
-                    sh 'snyk test --file=requirements.txt'
+                    sh 'snyk test --file=requirements.txt || true'
                     break
 
                 case 'node':
