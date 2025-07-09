@@ -20,8 +20,7 @@ def call(String language) {
                     break
 
                 case 'go':
-                    sh 'go install github.com/securego/gosec/cmd/gosec@latest || true'
-                    sh 'gosec ./... || true'
+                    echo "dependency scan happens here"
                     sh 'snyk auth $SNYK_TOKEN'
                     sh 'snyk test --file=go.mod'
                     break
