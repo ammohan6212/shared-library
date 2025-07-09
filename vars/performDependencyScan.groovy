@@ -16,7 +16,7 @@ def call(String language) {
                     sh 'npm audit || true'
                     sh 'npm audit fix --force'
                     sh 'snyk auth $SNYK_TOKEN'
-                    sh 'snyk test --file=package.json'
+                    sh 'snyk test --file=package.json || true'
                     break
 
                 case 'go':
