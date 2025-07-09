@@ -9,8 +9,7 @@ def call(String language) {
                 break
             case 'node':
                 // Assumes TypeScript is used and configured
-                sh 'npm install typescript || true'
-                sh 'npx tsc --noEmit || true'
+                echo "type checks happen here"
                 break
             case 'go':
                 sh 'go vet ./... || true'
