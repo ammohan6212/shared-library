@@ -30,7 +30,6 @@ def call(String language) {
                     sh 'mvn org.owasp:dependency-check-maven:check || true'
                     sh 'snyk auth $SNYK_TOKEN'
                     sh 'snyk test --file=pom.xml'
-                    sh 'dependency-check.sh --project "MyJavaApp" --scan . --format HTML'
                     break
 
                 case 'rust':
