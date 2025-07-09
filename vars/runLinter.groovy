@@ -14,7 +14,7 @@ def call(String language) {
                     break
                 case 'node':
                     sh """
-                        npm install eslint@9.0.0 || true
+                        npm install eslint@8.57.0 || true
                         npx eslint --init
                         npm run lint
                         npm run lint:fix
